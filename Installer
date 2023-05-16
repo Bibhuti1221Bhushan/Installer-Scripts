@@ -1,0 +1,129 @@
+#!/bin/sh
+
+# Colors :
+# ~~~~~~~~
+Green='\033[0;32m'        # Green
+Cyan='\033[1;36m'        # Cyan
+No='\e[0m'
+
+# Clear Terminal :
+# ~~~~~~~~~~~~~~~~
+clear
+
+# Installing Audia Packages :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Installing Audio Packeges ...${No}"
+echo ""
+sudo pacman -Sy --noconfirm --needed pipewire pipewire-jack pipewire-pulse pavucontrol
+systemctl --user enable pipewire.service pipewire-pulse.service
+echo ""
+echo -e "${Green}Installing Audio Packages Done ${No}"
+echo ""
+echo ""
+
+# Installing WM :
+# ~~~~~~~~~~~~~~~
+echo -e "${Cyan}Installing WM ...${No}"
+echo ""
+sudo pacman -Sy --noconfirm --needed hyprland
+echo ""
+echo -e "${Green}Installing WM Done ${No}"
+echo ""
+echo ""
+
+# Installing Needed Packages :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Installing Needed Packages ...${No}"
+echo ""
+sudo pacman -Sy --noconfirm --needed xdg-desktop-portal-hyprland xorg-xwayland swaybg wl-clipboard wtype slurp dialog
+echo ""
+echo -e "${Green}Installing Needed Packages Done ${No}"
+echo ""
+echo ""
+
+# Basic Packages :
+# ~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Installing Packages ...${No}"
+echo ""
+sudo pacman -Sy --needed --noconfirm kitty firefox nautilus
+echo ""
+echo -e "${Green}Installing Packages Done ${No}"
+echo ""
+echo ""
+
+# Aur Packages :    ___COMPLETE_____
+# ~~~~~~~~~~~~~~
+echo -e "${Cyan}Installing Aur Packeges ... ${No}"
+echo ""
+yay -Sy --needed --noconfirm bcm43142a0-firmware aic94xx-firmware jmtpfs swww
+echo ""
+echo -e "${Green}Installing Aur Packeges Done ${No}"
+echo ""
+echo ""
+
+# Basic Fonts :
+# ~~~~~~~~~~~~~
+echo -e "${Cyan}Installing Fonts ...${No}"
+sudo pacman -Sy --needed --noconfirm adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-dejavu powerline-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono ttf-cascadia-code ttf-joypixels ttf-font-awesome ttf-hack ttf-liberation ttf-monofur 
+echo -e "${Green}Installing Fonts Done ${No}"
+echo ""
+
+# Aur Fonts :
+# ~~~~~~~~~~~
+echo -e "${Cyan}Installing Aur Fonts ... ${No}"
+yay -Sy --needed --noconfirm ttf-meslo-nerd-font-powerlevel10k ttf-material-design-icons
+echo -e  "${Green}Installing Aur Fonts Done ${No}"
+echo ""
+echo ""
+
+# Environment Variables :
+# ~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan} Adding Environment Variables ...${No}"
+echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE_WINDOWDECORATION=1\nQT_AUTO_SCREEN_SCALE_FACTOR=1\nMOZ_ENABLE_WAYLAND=1" | sudo tee -a /etc/environment
+echo -e "${Green}Adding Environment Variables Done ${No}"
+echo ""
+echo ""
+
+# Setting up Fonts :
+# ~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Setting Up Fonts ... ${No}"
+fc-cache -fv
+sudo fc-cache -fv
+echo -e  "${Green}Setting Up Fonts Done ${No}"
+echo ""
+echo ""
+
+# Setting up Bluetooth :
+# ~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Enabling Bluetooth ... ${No}"
+sudo modprobe -r btusb && sudo modprobe btusb
+echo -e "${Cyan}Bluetooth Enabled${No}"
+echo ""
+echo ""
+
+# Setting up TLP :
+# ~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Enabling TLP ... ${No}"
+sudo systemctl enable tlp.service
+sudo systemctl start tlp.service
+sudo tlp start   
+echo -e "${Cyan}TLP Enabled${No}"
+echo ""
+echo ""
+
+# Making Zsh Deafult Shell :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}Switching to zsh Shell ...${No}"
+chsh -s /bin/zsh
+mkdir -p ~/Pictures/screenshots
+echo -e "${Cyan}Zsh is Enabled${No}"
+echo ""
+echo ""
+
+echo -e "${Green}Installing Packer ... ${No}"
+git clone --depth 1 https://github.com/wbthomason/packer.nvim\
+ ~/.local/share/nvim/site/pack/packer/start/packer.nvim
+echo -e "${Cyan}Packer is Done${No}"
+echo ""
+echo ""
+echo -e "${Cyan}All Done 😊${No}"
