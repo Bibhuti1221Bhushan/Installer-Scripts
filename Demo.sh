@@ -17,3 +17,6 @@ echo ""
 echo -e "${Green}Installation Done ${No}"
 echo ""
 echo -e "EDIT = /usr/lib/sddm/sddm.conf.d/default.conf"
+
+
+echo -e "Hello"
