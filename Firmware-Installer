@@ -1,0 +1,68 @@
+#!/bin/sh
+
+# COLORS :
+# ~~~~~~~~
+Green='\033[0;32m'        # GREEN
+Cyan='\033[1;36m'        # CYAN
+No='\e[0m'
+
+# CLEAR Terminal :
+# ~~~~~~~~~~~~~~~~
+clear
+
+# INSTALLING YAY - AUR PACKAGE MANAGER : 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING YAY... ${No}"
+echo ""
+sudo pacman -Sy git
+mkdir -p Downloads/Repos
+cd Downloads/Repos
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si
+cd ..
+rm -rf yay-bin
+echo ""
+echo -e "${Green}INSTALLING YAY - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING MISSING FIRMWARE PACKAGES : 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING MISSING FIRMWARE... ${No}"
+echo ""
+yay -Sy --needed aic94xx-firmware wd719x-firmware ast-firmware upd72020x-fw
+sudo pacman -S --needed linux-firmware-qlogic
+echo ""
+echo -e "${Green}INSTALLING MISSING FIRMWARE - DONE ${No}"
+echo ""
+echo ""
+
+# SETTING TTY CONSOLE FONT :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}SETTING TTY CONSOLE FONT... ${No}"
+echo ""
+sudo touch /etc/vconsole.conf
+echo KEYMAP=us | sudo tee -a /etc/vconsole.conf
+echo FONT=default8x16 | sudo tee -a /etc/vconsole.conf
+echo FONT_MAP=8859-2 | sudo tee -a /etc/vconsole.conf
+echo ""
+echo -e "${Green}SETTING TTY CONSOLE FONT - DONE ${No}"
+echo ""
+echo ""
+
+# RE-BUILDING MKINITCPIO - CONSOLE FONT :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}RE-BUILDING MKINITCPIO... ${No}"
+echo ""
+sudo sed -i 's/BINARIES=()/BINARIES=(setfont)/g' /etc/mkinitcpio.conf
+sudo mkinitcpio -P
+echo ""
+echo -e "${Green}RE-BUILDING MKINITCPIO - DONE ${No}"
+echo ""
+echo ""
+
+# REBOOTING :
+# ~~~~~~~~~~~
+echo -e "${Green}REBOOTING... ${No}"
+systemctl reboot
