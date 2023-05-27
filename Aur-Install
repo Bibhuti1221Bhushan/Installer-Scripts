@@ -11,22 +11,10 @@ No='\e[0m'
 # ~~~~~~~~~~~~~~~~
 clear
 
-# INSTALLING GIT :
-# ~~~~~~~~~~~~~~~~
-echo -e "${Cyan}INSTALLING GIT... ${No}"
-echo ""
-sudo pacman -Sy --needed git
-echo ""
-echo -e "${Green}INSTALLING GIT - DONE ${No}"
-echo ""
-echo ""
-
-
 # INSTALLING YAY - AUR PACKAGE MANAGER : 
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING YAY (AUR PACKAGE MANAGER)... ${No}"
 echo ""
-mkdir -p Downloads/Repos
 cd Downloads/Repos
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
