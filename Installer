@@ -1,129 +1,234 @@
 #!/bin/sh
 
-# Colors :
+# COLORS :
 # ~~~~~~~~
-Green='\033[0;32m'        # Green
-Cyan='\033[1;36m'        # Cyan
+Green='\033[0;32m'        # GREEN
+Cyan='\033[1;36m'         # CYAN
+Yellow='\e[1;33m'         # YELLOW  
 No='\e[0m'
 
-# Clear Terminal :
+# CLEAR Terminal :
 # ~~~~~~~~~~~~~~~~
 clear
 
-# Installing Audia Packages :
+# INSTALLING AUDIO PACKAGES :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Installing Audio Packeges ...${No}"
+echo -e "${Cyan}INSTALLING AUDIO PACKEGES...${No}"
 echo ""
-sudo pacman -Sy --noconfirm --needed pipewire pipewire-jack pipewire-pulse pavucontrol
-systemctl --user enable pipewire.service pipewire-pulse.service
+sudo pacman -Sy --needed pipewire pipewire-jack pipewire-pulse pipewire-alsa pavucontrol
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 echo ""
-echo -e "${Green}Installing Audio Packages Done ${No}"
+echo -e "${Green}INSTALLING AUDIO PACKAGES - DONE ${No}"
 echo ""
 echo ""
 
-# Installing WM :
+# SETTING BLUETOOTH :
+# ~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING BLUETOOTH...${No}"
+echo ""
+sudo pacman -S bluez bluez-utils blueman
+echo ""
+echo -e "${Green}INSTALLING BLUETOOTH - DONE ${No}"
+echo ""
+echo ""
+echo -e "${Yellow}SETTING BLUETOOTH SERVICE... ${No}"
+echo ""
+sudo systemctl enable bluetooth
+sudo systemctl start bluetooth
+echo ""
+echo -e "${Green}SETTING BLUETOOTH SERVICE - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING SDDM : 
+# ~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING SDDM... ${No}"
+echo ""
+yay -S --needed sddm-git
+echo ""
+echo -e "${Green}INSTALLING SDDM - DONE ${No}"
+echo ""
+echo ""
+echo -e "${Yellow}ENABLING SDDM SERVICE... ${No}"
+echo ""
+sudo systemctl enable sddm.service
+echo ""
+echo -e "${Green}SDDM ENABLED - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING WM :
 # ~~~~~~~~~~~~~~~
-echo -e "${Cyan}Installing WM ...${No}"
+echo -e "${Cyan}INSTALLING WM...${No}"
 echo ""
-sudo pacman -Sy --noconfirm --needed hyprland
+sudo pacman -S --needed hyprland xdg-desktop-portal-hyprland
 echo ""
-echo -e "${Green}Installing WM Done ${No}"
+echo -e "${Green}INSTALLING WM - DONE ${No}"
 echo ""
 echo ""
 
-# Installing Needed Packages :
+# INSTALLING NEEDED PACKAGES :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Installing Needed Packages ...${No}"
+echo -e "${Cyan}INSTALLING NEEDED PACKAGES...${No}"
 echo ""
-sudo pacman -Sy --noconfirm --needed xdg-desktop-portal-hyprland xorg-xwayland swaybg wl-clipboard wtype slurp dialog
+sudo pacman -S --needed wl-clipboard wtype slurp dialog dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils intel-media-driver
 echo ""
-echo -e "${Green}Installing Needed Packages Done ${No}"
-echo ""
-echo ""
-
-# Basic Packages :
-# ~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Installing Packages ...${No}"
-echo ""
-sudo pacman -Sy --needed --noconfirm kitty firefox nautilus
-echo ""
-echo -e "${Green}Installing Packages Done ${No}"
+echo -e "${Green}INSTALLING NEEDED PACKAGES - DONE ${No}"
 echo ""
 echo ""
 
-# Aur Packages :    ___COMPLETE_____
-# ~~~~~~~~~~~~~~
-echo -e "${Cyan}Installing Aur Packeges ... ${No}"
+# INSTALLING BASIC PACKAGES :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING BASIC PACKAGES...${No}"
 echo ""
-yay -Sy --needed --noconfirm bcm43142a0-firmware aic94xx-firmware jmtpfs swww
+sudo pacman -S --needed kitty firefox pcmanfm-gtk3 evince gnome-disk-utility gnome-calculator obsidian network-manager-applet btop cmatrix bat exa neofetch starship cliphist wget man-db man-pages pacman-contrib
 echo ""
-echo -e "${Green}Installing Aur Packeges Done ${No}"
+echo -e "${Green}INSTALLING BASIC PACKAGES - DONE ${No}"
 echo ""
 echo ""
 
-# Basic Fonts :
+# INSTALLING AUR PACKAGES : 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING AUR PACKEGES... ${No}"
+echo ""
+yay -S --needed xfce-polkit waybar-hyprland sublime-text-4 redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git tty-clock-git cava pipes.sh
+yay -S --needed brave-bin
+sudo pacman -S --needed rofi-emoji
+echo ""
+echo -e "${Green}INSTALLING AUR PACKEGES - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING LIBRE-OFFICE :
+# ~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING LIBRE-OFFICE...${No}"
+echo ""
+sudo pacman -S --needed libreoffice-fresh hunspell hunspell-en_us
+yay -S --needed libreoffice-extension-languagetool 
+echo ""
+echo -e "${Green}INSTALLING LIBRE-OFFICE - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING VIRTUAL WINDOWS MANAGER :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING VIRTUAL WINDOWS MANAGER...${No}"
+echo ""
+sudo pacman -S --needed qemu-base virt-manager dnsmasq vde2 bridge-utils openbsd-netcat ebtables iptables libguestfs
+echo ""
+echo -e "${Green}INSTALLING VIRTUAL WINDOWS MANAGER - DONE ${No}"
+echo ""
+echo ""
+echo -e "${Yellow}ENABLING LIBVIRTD SERVICE... ${No}"
+echo ""
+sudo systemctl enable libvirtd.service
+sudo systemctl start libvirtd.service
+echo ""
+sudo virsh net-start default
+sudo virsh net-autostart default
+echo ""
+sudo usermod -aG libvirt $(whoami)
+newgrp libvirt
+echo ""
+echo -e "${Green}LIBVIRTD SERVICE ENABLED - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING ZSH SHELL :
+# ~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING ZSH SHELL...${No}"
+echo ""
+sudo pacman -S --needed zsh zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+echo ""
+echo -e "${Green}INSTALLING ZSH SHELL - DONE ${No}"
+echo ""
+echo ""
+
+# BASIC FONTS :
 # ~~~~~~~~~~~~~
-echo -e "${Cyan}Installing Fonts ...${No}"
-sudo pacman -Sy --needed --noconfirm adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-dejavu powerline-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-jetbrains-mono ttf-cascadia-code ttf-joypixels ttf-font-awesome ttf-hack ttf-liberation ttf-monofur 
-echo -e "${Green}Installing Fonts Done ${No}"
+echo -e "${Cyan}INSTALLING FONTS...${No}"
+echo ""
+sudo pacman -S --needed adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-joypixels ttf-liberation ttf-monofur ttf-dejavu powerline-fonts
+echo ""
+echo -e "${Green}INSTALLING FONTS - DONE ${No}"
+echo ""
 echo ""
 
-# Aur Fonts :
+# AUR FONTS :
 # ~~~~~~~~~~~
-echo -e "${Cyan}Installing Aur Fonts ... ${No}"
-yay -Sy --needed --noconfirm ttf-meslo-nerd-font-powerlevel10k ttf-material-design-icons
-echo -e  "${Green}Installing Aur Fonts Done ${No}"
+echo -e "${Cyan}INSTALLING AUR FONTS... ${No}"
+echo ""
+yay -S --needed ttf-meslo-nerd-font-powerlevel10k ttf-material-design-icons otf-bebas-neue-git
+echo ""
+echo -e  "${Green}INSTALLING AUR FONTS - DONE ${No}"
 echo ""
 echo ""
 
-# Environment Variables :
-# ~~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan} Adding Environment Variables ...${No}"
-echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE_WINDOWDECORATION=1\nQT_AUTO_SCREEN_SCALE_FACTOR=1\nMOZ_ENABLE_WAYLAND=1" | sudo tee -a /etc/environment
-echo -e "${Green}Adding Environment Variables Done ${No}"
+# REBUILD FONTS CACHE :
+# ~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}REBUILDING FONTS CACHE... ${No}"
 echo ""
-echo ""
-
-# Setting up Fonts :
-# ~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Setting Up Fonts ... ${No}"
 fc-cache -fv
 sudo fc-cache -fv
-echo -e  "${Green}Setting Up Fonts Done ${No}"
+echo ""
+echo -e  "${Green}REBUILDING FONTS CACHE - DONE ${No}"
 echo ""
 echo ""
 
-# Setting up Bluetooth :
-# ~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Enabling Bluetooth ... ${No}"
-sudo modprobe -r btusb && sudo modprobe btusb
-echo -e "${Cyan}Bluetooth Enabled${No}"
-echo ""
-echo ""
+# DISABLE WIFI POWERSAVE MODE :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+read -rep $'\e[1;33mWOULD YOU LIKE TO DISABLE WI-FI POWERSAVE? (Y,N)  \e[0m' WIFI
+if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
+    LOC="/etc/NetworkManager/conf.d/wifi-powersave.conf"
+    echo ""
+    echo -e "${Cyan}THE FOLLOWING FILE HAS BEEN CREATED $LOC.\n"
+    echo -e "[connection]\nwifi.powersave = 2" | sudo tee -a $LOC 
+    echo ""
+    echo -en "${Green}RESTARTING NETWORK-MANAGER SERVICE, PLEASE WAIT."
+    sleep 2
+    sudo systemctl restart NetworkManager
+    
+    #WAIT FOR SERVICES TO RESTORE (LOOKING AT YOU DNS)
+    for i in {1..6} 
+    do
+        echo -n "."
+        sleep 1
+    done
+    echo -en "DONE!\n"
+    sleep 2
+    echo -e "\e[1A\e[K${Yellow}NETWORKMANAGER RESTART COMPLETED."
+    echo ""
+    echo ""
+fi
 
-# Setting up TLP :
-# ~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Enabling TLP ... ${No}"
-sudo systemctl enable tlp.service
-sudo systemctl start tlp.service
-sudo tlp start   
-echo -e "${Cyan}TLP Enabled${No}"
-echo ""
-echo ""
-
-# Making Zsh Deafult Shell :
+# MAKING ZSH DEAFULT SHELL :
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}Switching to zsh Shell ...${No}"
-chsh -s /bin/zsh
-mkdir -p ~/Pictures/screenshots
-echo -e "${Cyan}Zsh is Enabled${No}"
+echo -e "${Cyan}SWITCHING TO ZSH SHELL...${No}"
+echo ""
+chsh -s (which zsh)
+echo ""
+echo -e "${Cyan}NOW ZSH IS DEFAULT SHELL${No}"
 echo ""
 echo ""
 
-echo -e "${Green}Installing Packer ... ${No}"
-git clone --depth 1 https://github.com/wbthomason/packer.nvim\
- ~/.local/share/nvim/site/pack/packer/start/packer.nvim
-echo -e "${Cyan}Packer is Done${No}"
+# CREATING DIRECTORIES :
+# ~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}CREATING DIRECTORIES...${No}"
+echo ""
+mkdir -p ~/Documents
+mkdir -p ~/Videos
+mkdir -p ~/Musics
+mkdir -p ~/Pictures/Screenshots
+echo ""
+echo -e "${Cyan}DIRECTORIES CREATED${No}"
 echo ""
 echo ""
-echo -e "${Cyan}All Done 😊${No}"
+
+# REBOOTING :
+# ~~~~~~~~~~~
+read -rep $'\e[1;33mWOULD YOU LIKE TO REBOOT NOW (Y,N)  \e[0m' HYP
+if [[ $HYP == "Y" || $HYP == "y" ]]; then
+    exec systemctl reboot --no-wall
+else
+    exit
+fi

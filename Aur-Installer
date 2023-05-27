@@ -1,0 +1,48 @@
+#!/bin/sh
+
+# COLORS :
+# ~~~~~~~~
+Green='\033[0;32m'        # GREEN
+Cyan='\033[1;36m'         # CYAN
+Yellow='\e[1;33m'         # YELLOW  
+No='\e[0m'
+
+# CLEAR Terminal :
+# ~~~~~~~~~~~~~~~~
+clear
+
+# INSTALLING GIT :
+# ~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING GIT... ${No}"
+echo ""
+sudo pacman -Sy --needed git
+echo ""
+echo -e "${Green}INSTALLING GIT - DONE ${No}"
+echo ""
+echo ""
+
+
+# INSTALLING YAY - AUR PACKAGE MANAGER : 
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING YAY (AUR PACKAGE MANAGER)... ${No}"
+echo ""
+mkdir -p Downloads/Repos
+cd Downloads/Repos
+git clone https://aur.archlinux.org/yay-bin.git
+cd yay-bin
+makepkg -si
+cd ..
+rm -rf yay-bin
+echo ""
+echo -e "${Green}INSTALLING YAY (AUR PACKAGE MANAGER) - DONE ${No}"
+echo ""
+echo ""
+
+# REBOOTING :
+# ~~~~~~~~~~~
+read -rep $'\e[1;33mWOULD YOU LIKE TO REBOOT NOW (Y,N)  \e[0m' HYP
+if [[ $HYP == "Y" || $HYP == "y" ]]; then
+    exec systemctl reboot --no-wall
+else
+    exit
+fi
