@@ -105,7 +105,30 @@ exit
 unmount -a
 poweroff
 
+
                    # POST INSTALLATION ARCH LINUX #
+
+
+# RECONNECTING NETWORK
+sudo nmtui
+
+# CHECK FOR UPDATES & GIT INSTALL
+sudo pacman -Syu
+sudo pacman -S --needed git
+
+# CLONING INSTALLER-SCRIPTS REPO
+mkdir -p Downloads/Repos
+cd Downloads/Repos
+git clone https://github.com/Bibhuti1221Bhushan/Installer-Scripts.git
+cd Installer-Scripts
+chmod +x *
+./Aur-Install
+./Firmware-Install
+./Cutee-Install
+./Installer
+
+
+                   # MANUAL POST INSTALLATION ARCH LINUX #
 
 
 # RECONNECTING NETWORK
@@ -115,18 +138,18 @@ sudo nmtui
 sudo pacman -Syu
 
 # INSTALLING AUDIO --NEEDED PIPEWIRE
-sudo pacman -S pipewire pipewire-jack pipewire-pulse pipewire-alsa pavucontrol
-systemctl --user enable pipewire.service pipewire-pulse.service
+sudo pacman -Sy --needed pipewire pipewire-jack pipewire-pulse pipewire-alsa pavucontrol
+systemctl --user --now enable pipewire pipewire-pulse wireplumber
 
 # INSTALLING FROM ARCH REPOSITORY --NEEDED FOR HYPRLAND
-sudo pacman -S hyprland xdg-desktop-portal-hyprland
-sudo pacman -S wl-clipboard wtype slurp dialog
+sudo pacman -S --needed hyprland xdg-desktop-portal-hyprland
+sudo pacman -S --needed wl-clipboard wtype slurp dialog
 
-sudo pacman -S kitty firefox pcmanfm-gtk3
+sudo pacman -S --needed kitty firefox pcmanfm-gtk3
 
 # INTSALLING GIT & AUR HELPER (YAY)
 sudo pacman -S git
-mkdir Downloads/Repos
+mkdir -p Downloads/Repos
 cd Downloads/Repos
 git clone https://aur.archlinux.org/yay-bin.git
 cd yay-bin
@@ -138,16 +161,20 @@ rm -rf yay-bin
 yay -S sddm-git
 sudo systemctl enable sddm.service
 
+# INSTALLING MISSING DRIVERS
+yay -S --needed aic94xx-firmware wd719x-firmware ast-firmware upd72020x-fw
+sudo pacman -S --needed linux-firmware-qlogic
+
 # INSTALLING FROM AUR REPOSITORY --NEEDED FOR HYPRLAND 
-yay -S xfce-polkit 
-yay -S waybar-hyprland 
-yay -S sublime-text-4
+yay -S --needed xfce-polkit 
+yay -S --needed waybar-hyprland 
+yay -S --needed sublime-text-4
 
 # BOOT IN TO WINDOW MANAGER
 sudo reboot --r now
 
 
-                   # POST INSTALLATION OF HYPRLAND WINDOWS MANAGER #
+                   # MANUAL POST INSTALLATION OF HYPRLAND WINDOWS MANAGER #
 
 
 # COPING MY KEYBINDINGS
@@ -155,79 +182,65 @@ COPY HYPRLAND.CONF --$HOME/.config/hypr/
 sudo reboot
 
 # INSTALLING -- NEEDED FOR QT THEME ENGINE
-sudo pacman -S qt5-wayland kvantum qt5ct qt6ct qt6-tools qt5-quickcontrols2 qt5-graphicaleffects
+sudo pacman -S --needed qt5-wayland kvantum qt5ct qt6ct qt6-tools qt5-quickcontrols2 qt5-graphicaleffects
+echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORMTHEME=qt6ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE_WINDOWDECORATION=1\nQT_AUTO_SCREEN_SCALE_FACTOR=1\nMOZ_ENABLE_WAYLAND=1" | sudo tee -a /etc/environment
 
 # INSTALLING EXTRAS FROM ARCH REPOSITORY
-sudo pacman -S dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils intel-media-driver
-sudo pacman -S gnome-disk-utility gnome-calculator meld obsidian network-manager-applet
-sudo pacman -S btop cmatrix bat exa ranger neofetch starship cliphist wget  
-sudo pacman -S man-db man-pages pacman-contrib   
+sudo pacman -S --needed dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils intel-media-driver
+sudo pacman -S --needed gnome-disk-utility gnome-calculator meld obsidian network-manager-applet evince
+sudo pacman -S --needed btop cmatrix bat exa ranger python-pillow neofetch starship cliphist wget python-pip python-requests
+sudo pacman -S --needed man-db man-pages pacman-contrib   
   
 # IF NEEDED -- thunar thunar-volman thunar-archive-plugin nautilus
 # IF NEEDED -- dconf-editor net-tools inetutils
 
 # INSTALLING EXTRAS FROM AUR REPOSITORY
-yay -S redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git
-yay -S tty-clock-git cava 
+yay -S --needed redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git
+yay -S --needed tty-clock-git cava brave-bin pipes.sh
 
 sudo pacman -S rofi-emoji
 
 # INSTALLING BLUETOOTH 
-sudo pacman -S bluez bluez-utils blueman
+sudo pacman -S --needed bluez bluez-utils blueman
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
 # INSTALLING LIBREOFFICE & STUFF
-sudo pacman -S libreoffice-fresh
+sudo pacman -S --needed libreoffice-fresh hunspell hunspell-en_us
 yay -S libreoffice-extension-languagetool    
 
 # INSTALLING VIRTUAL WINDOWS MANAGER
-sudo pacman -S virt-manager qemu-desktop dnsmasq bridge-utils
-IF NEEDED -- iptables-nft 
+sudo pacman -S --needed qemu-base virt-manager dnsmasq vde2 bridge-utils openbsd-netcat ebtables iptables libguestfs
 sudo systemctl enable libvirtd.service
 sudo systemctl start libvirtd.service
 sudo virsh net-start default
 sudo virsh net-autostart default
+sudo usermod -aG libvirt $(whoami)
+newgrp libvirt
+sudo nvim /etc/libvirt/libvirtd.conf     
+unix_sock_group = "libvirt"       --UNCOMMENT
+unix_sock_rw_perms = "0770"       --UNCOMMENT
 
 # INSTALLING ZSH SHELL 
-sudo pacman -S zsh
-sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
-git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
-git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions
-git clone https://github.com/zsh-users/zsh-completions ${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions
-
-# INSTALLING DT COLOR SCRIPT
-COPY COLOR-SCRIPT .CONFIG
-
-# CONFIGURING ZSH & STARSHIP PROMPT
-COPY PERSONAL .ZSHENV FILE
-COPY PERSONAL ZSH CONFIG FILES
-COPY PERSONAL STARSHIP.TOML
-
-# INSTALLING PIPES TERMINAL SIMULATION
-cd Downloads/Repos
-git clone https://github.com/pipeseroni/pipes.sh.git 
-cd pipes.sh
-sudo make install
-cd ..
-rm -rf pipes.sh
+sudo pacman -S zsh zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
+chsh -s (which zsh)
 
 # INSTALLING ARCH FONTS 
-sudo pacman -S noto-fonts noto-fonts-emoji noto-fonts-cjk noto-fonts-extra ttf-ubuntu-font-family adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-roboto
-sudo pacman -S otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd 
+sudo pacman -S sudo pacman -S --needed adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-joypixels ttf-nerd-fonts-symbols-common ttf-liberation ttf-monofur ttf-dejavu powerline-fonts
+yay -S --needed ttf-meslo-nerd-font-powerlevel10k ttf-material-design-icons otf-bebas-neue-git
 
 IF NEEDED NERD-FONTS -- ttf-hack-nerd otf-cascadia-code-nerd ttf-mononoki-nerd ttf-terminus-nerd
 IF NEEDED AUR -- ttf-ms-fonts
 
 # REGENERATE FONTS CACHE
-fc-cache -rv 
-sudo fc-cache -rv
+fc-cache -fv 
+sudo fc-cache -fv
+
+                   # MANUAL CONFIG AND THEMEING #
+
 
 # INSTALLING GTK THEME
 yay -S pop-gtk-theme
-
-# INSTALLING CURSOR THEME
-COPY .ICONS FOLDER >> ~$HOME
 
 # INSTALLING ICONS THEME
 sudo pacman -S papirus-icon-theme       
@@ -240,58 +253,82 @@ cd Grub-Themes
 sudo ./install.sh
 
 # INSTALLING SDDM THEME
-cd Downloads/Repos
-git clone https://github.com/aczw/sddm-theme-corners 
-cd sddm-theme-corners
--- # RENAME corners >> Corners
--- # ADD LOCKSCREEN WALLPAPERS >> ~/Corners/backgrounds
--- # EDIT theme.conf --CHANGE Background --REMOVE DATE & TIME
-sudo cp -r Corners/ /usr/share/sddm/themes/
--- # CHANGE USER ICONS
-sudo cp -r .face.icon root.face.icon /usr/share/sddm/faces 
--- # SET THEME >> CONFIG FILE
-cd /usr/lib/sddm/sddm.conf.d/
-sudo nvim default.conf   (EDIT Theme Name = Corners)
+cd Login-Manager-Themes
+./Install.sh
 
+                   # IF NEEDED #
 
 
 # INSTALLING VIRTUAL WINDOWS MANAGER
 sudo pacman -S gnome-boxes
 NOTE --INSTALL spice spice-gtk IN GUEST
 
+# INSTALLING MPD & NCMPCPP
+sudo pacman -S mpd ncmpcpp
+systemctl enable mpd
+
 # INSTALLING VIRTUAL BOX
 sudo pacman -S virtualbox virtualbox-host-modules-arch
 sudo usermod -aG vboxusers Bibhuti
 
 
-
                    # SOME IMPORTANT NOTES #
--- SUBLIME TEXT THEME = Gravity One
+
+
+-- SUBLIME TEXT THEME = Gravity
 -- MOSTLY CONFIG FILES ARE IN BASH SYNTAX 
--- MUST CREATE Pictures/Screenshots NEEDED BY SCREENSHOT TOOLS
 -- VSCODE EXTENSIONS -- atommaterial.a-file-icon-vscode zhuangtongfa.material-theme naumovs.color-highlight
+-- VSCODE KEYBINDS -- uppercase CTRL+K,CTRL+U lowercase CTRL+U,CTRL+K
 -- WINDOWS TITLES: Noto Sans Regular 10
+-- FIREFOX about:config -- devtools.accessibility.enabled False
+-- FIREFOX about:config -- extensions.pocket.enabled False 
+-- FIREFOX about:config -- identity.fxaccounts.enabled False
+-- FIREFOX about:config -- browser.preferences.moreFromMozilla False   
+-- FIREFOX about:config -- full-screen-api.warning.timeout 0
 
 
 
 
 
 
-
-# DONE
+# DONE EVERYTHING
 GRUB-THEMES
+SDDM-THEMES
 CURSOR
+
+# DONE SLOWLY
+WAYBAR
+HYPRLAND
 ZSHENV
 ZSHRC
 BASHRC
 NERD-FONTS
-HYPRLAND
 STARSHIP
-SDDM-THEMES
 ROFI LAUNCHER
+ROFI POWERMENU
+ROFI CLIPBOARD
+ROFI EMOJI
+ROFI-BEATS
+DUNST 
+VSCODE
+SUBLIME TEXT 4
+KITTY 
+NEOFETCH 
+RANGER
 
 
 # EDITING
-ROFI-BEATS
-LOCKSCREEN  --SCRIPTS 
-WAYBAR BRIGHTNESS ICONS + TOOLTIPS
+
+LOCKSCREEN  --CONFIG 
+
+
+
+
+
+
+# EXCLUDE FROM AUTO INSTALLER SCRIPTS
+ranger
+tlp
+meld
+unix_sock_group = "libvirt"        /etc/libvirt/libvirtd.conf
+unix_sock_rw_perms = "0770"

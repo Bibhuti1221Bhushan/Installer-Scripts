@@ -7,7 +7,7 @@ Cyan='\033[1;36m'         # CYAN
 Yellow='\e[1;33m'         # YELLOW  
 No='\e[0m'
 
-# CLEAR Terminal :
+# CLEAR TERMINAL :
 # ~~~~~~~~~~~~~~~~
 clear
 
@@ -81,7 +81,7 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING BASIC PACKAGES...${No}"
 echo ""
-sudo pacman -S --needed kitty firefox pcmanfm-gtk3 evince gnome-disk-utility gnome-calculator obsidian network-manager-applet btop cmatrix bat exa neofetch starship cliphist wget man-db man-pages pacman-contrib
+sudo pacman -S --needed kitty firefox pcmanfm-gtk3 evince gnome-disk-utility gnome-calculator obsidian network-manager-applet btop cmatrix bat exa neofetch starship cliphist wget ranger python-pillow python-pip python-requests man-db man-pages pacman-contrib
 echo ""
 echo -e "${Green}INSTALLING BASIC PACKAGES - DONE ${No}"
 echo ""
@@ -148,7 +148,7 @@ echo ""
 # ~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING FONTS...${No}"
 echo ""
-sudo pacman -S --needed adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-joypixels ttf-liberation ttf-monofur ttf-dejavu powerline-fonts
+sudo pacman -S --needed adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-joypixels ttf-nerd-fonts-symbols-common ttf-liberation ttf-monofur ttf-dejavu powerline-fonts
 echo ""
 echo -e "${Green}INSTALLING FONTS - DONE ${No}"
 echo ""
