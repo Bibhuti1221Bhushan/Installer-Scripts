@@ -26,7 +26,8 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING BLUETOOTH...${No}"
 echo ""
-sudo pacman -S bluez bluez-utils blueman
+sudo pacman -S --needed bluez bluez-utils 
+yay -S --needed blueberry-wayland
 echo ""
 echo -e "${Green}INSTALLING BLUETOOTH - DONE ${No}"
 echo ""
@@ -37,6 +38,16 @@ sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 echo ""
 echo -e "${Green}SETTING BLUETOOTH SERVICE - DONE ${No}"
+echo ""
+echo ""
+
+# INSTALLING SDDM QT THEME ENGINE PACKAGES :
+# ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+echo -e "${Cyan}INSTALLING SDDM THEME DEPENDENCIES...${No}"
+echo ""
+sudo pacman -Sy --needed qt5-graphicaleffects qt5-svg qt5-quickcontrols2
+echo ""
+echo -e "${Green}INSTALLING SDDM THEME DEPENDENCIES - DONE ${No}"
 echo ""
 echo ""
 
@@ -51,7 +62,7 @@ echo ""
 echo ""
 echo -e "${Yellow}ENABLING SDDM SERVICE... ${No}"
 echo ""
-sudo systemctl enable sddm.service
+sudo systemctl enable sddm
 echo ""
 echo -e "${Green}SDDM ENABLED - DONE ${No}"
 echo ""
@@ -71,7 +82,7 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING NEEDED PACKAGES...${No}"
 echo ""
-sudo pacman -S --needed wl-clipboard wtype slurp dialog dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils intel-media-driver
+sudo pacman -S --needed wl-clipboard wtype slurp dialog dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils
 echo ""
 echo -e "${Green}INSTALLING NEEDED PACKAGES - DONE ${No}"
 echo ""
@@ -81,7 +92,7 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING BASIC PACKAGES...${No}"
 echo ""
-sudo pacman -S --needed kitty firefox pcmanfm-gtk3 evince gnome-disk-utility gnome-calculator obsidian network-manager-applet btop cmatrix bat exa neofetch starship cliphist wget ranger python-pillow python-pip python-requests man-db man-pages pacman-contrib
+sudo pacman -S --needed kitty firefox pcmanfm-gtk3 pinta evince gnome-disk-utility galculator meld obsidian network-manager-applet htop bat exa ranger neofetch starship cliphist wget python-pillow python-pip python-requests man-db man-pages pacman-contrib
 echo ""
 echo -e "${Green}INSTALLING BASIC PACKAGES - DONE ${No}"
 echo ""
@@ -91,8 +102,8 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING AUR PACKEGES... ${No}"
 echo ""
-yay -S --needed xfce-polkit waybar-hyprland sublime-text-4 redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git tty-clock-git cava pipes.sh
-yay -S --needed brave-bin
+yay -S --needed xfce-polkit waybar-hyprland redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git tty-clock-git neo-matrix-git cava pipes.sh
+yay -S --needed brave-bin visual-studio-code-bin
 sudo pacman -S --needed rofi-emoji
 echo ""
 echo -e "${Green}INSTALLING AUR PACKEGES - DONE ${No}"
@@ -141,6 +152,13 @@ echo ""
 sudo pacman -S --needed zsh zsh-autosuggestions zsh-syntax-highlighting zsh-history-substring-search
 echo ""
 echo -e "${Green}INSTALLING ZSH SHELL - DONE ${No}"
+echo ""
+echo ""
+echo -e "${Cyan}SWITCHING TO ZSH SHELL...${No}"
+echo ""
+chsh -s (which zsh)
+echo ""
+echo -e "${Cyan}NOW ZSH IS DEFAULT SHELL...${No}"
 echo ""
 echo ""
 
@@ -200,16 +218,6 @@ if [[ $WIFI == "Y" || $WIFI == "y" ]]; then
     echo ""
     echo ""
 fi
-
-# MAKING ZSH DEAFULT SHELL :
-# ~~~~~~~~~~~~~~~~~~~~~~~~~~
-echo -e "${Cyan}SWITCHING TO ZSH SHELL...${No}"
-echo ""
-chsh -s (which zsh)
-echo ""
-echo -e "${Cyan}NOW ZSH IS DEFAULT SHELL${No}"
-echo ""
-echo ""
 
 # CREATING DIRECTORIES :
 # ~~~~~~~~~~~~~~~~~~~~~~

@@ -15,7 +15,7 @@ clear
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING QT PACKEGES...${No}"
 echo ""
-sudo pacman -Sy --needed qt5-wayland kvantum qt5ct qt6ct qt6-tools qt5-quickcontrols2 qt5-graphicaleffects
+sudo pacman -Sy --needed qt5-wayland kvantum qt5ct qt6ct qt6-tools
 echo ""
 echo -e "${Green}INSTALLING QT PACKAGES - DONE ${No}"
 echo ""

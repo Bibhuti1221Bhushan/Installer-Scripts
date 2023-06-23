@@ -123,9 +123,8 @@ git clone https://github.com/Bibhuti1221Bhushan/Installer-Scripts.git
 cd Installer-Scripts
 chmod +x *
 ./Aur-Install
-./Firmware-Install
-./Cutee-Install
-./Installer
+./Driver-Install
+./WM-Install
 
 
                    # MANUAL POST INSTALLATION ARCH LINUX #
@@ -159,7 +158,7 @@ rm -rf yay-bin
 
 # INSTALLING SDDM LOG IN MANAGER
 yay -S sddm-git
-sudo systemctl enable sddm.service
+sudo systemctl enable sddm
 
 # INSTALLING MISSING DRIVERS
 yay -S --needed aic94xx-firmware wd719x-firmware ast-firmware upd72020x-fw
@@ -186,9 +185,9 @@ sudo pacman -S --needed qt5-wayland kvantum qt5ct qt6ct qt6-tools qt5-quickcontr
 echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORMTHEME=qt6ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE_WINDOWDECORATION=1\nQT_AUTO_SCREEN_SCALE_FACTOR=1\nMOZ_ENABLE_WAYLAND=1" | sudo tee -a /etc/environment
 
 # INSTALLING EXTRAS FROM ARCH REPOSITORY
-sudo pacman -S --needed dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils intel-media-driver
-sudo pacman -S --needed gnome-disk-utility gnome-calculator meld obsidian network-manager-applet evince
-sudo pacman -S --needed btop cmatrix bat exa ranger python-pillow neofetch starship cliphist wget python-pip python-requests
+sudo pacman -S --needed dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils
+sudo pacman -S --needed pinta gnome-disk-utility galculator meld obsidian network-manager-applet evince
+sudo pacman -S --needed htop bat exa ranger neofetch starship cliphist wget python-pillow python-pip python-requests
 sudo pacman -S --needed man-db man-pages pacman-contrib   
   
 # IF NEEDED -- thunar thunar-volman thunar-archive-plugin nautilus
@@ -196,12 +195,13 @@ sudo pacman -S --needed man-db man-pages pacman-contrib
 
 # INSTALLING EXTRAS FROM AUR REPOSITORY
 yay -S --needed redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git
-yay -S --needed tty-clock-git cava brave-bin pipes.sh
+yay -S --needed tty-clock-git cava brave-bin pipes.sh neo-matrix-git visual-studio-code-bin
 
 sudo pacman -S rofi-emoji
 
 # INSTALLING BLUETOOTH 
-sudo pacman -S --needed bluez bluez-utils blueman
+sudo pacman -S --needed bluez bluez-utils
+yay -S --needed blueberry-wayland
 sudo systemctl enable bluetooth
 sudo systemctl start bluetooth
 
@@ -326,9 +326,16 @@ SWAYLOCK
 MPD
 NCMPCPP
 
-# EXCLUDE FROM AUTO INSTALLER SCRIPTS
-ranger
-tlp
-meld
-unix_sock_group = "libvirt"        /etc/libvirt/libvirtd.conf
-unix_sock_rw_perms = "0770"
+# MANUAL PROCESS AFTER INSTALLER SCRIPTS
+sudo nvim /etc/libvirt/libvirtd.conf     
+unix_sock_group = "libvirt"       --UNCOMMENT
+unix_sock_rw_perms = "0770"       --UNCOMMENT
+
+
+
+
+# NOT INSTALLED - FUTURE 
+TLP
+BLUEMAN
+LF
+SUBLIME-TEXT-4 
