@@ -260,6 +260,11 @@ yay -S --needed ttf-material-design-icons otf-bebas-neue-git
 fc-cache -fv 
 sudo fc-cache -fv
 
+# CREATING DIRECTORIES
+mkdir -p ~/Videos
+mkdir -p ~/Musics
+mkdir -p ~/Pictures/Screenshots
+
                    # MANUAL CONFIG AND THEMEING #
 
 

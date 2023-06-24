@@ -34,8 +34,7 @@ echo ""
 echo ""
 echo -e "${Yellow}SETTING BLUETOOTH SERVICE... ${No}"
 echo ""
-sudo systemctl enable bluetooth
-sudo systemctl start bluetooth
+sudo systemctl --now enable bluetooth
 echo ""
 echo -e "${Green}SETTING BLUETOOTH SERVICE - DONE ${No}"
 echo ""
@@ -82,7 +81,7 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING NEEDED PACKAGES...${No}"
 echo ""
-sudo pacman -S --needed wl-clipboard wtype slurp dialog dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle file-roller p7zip gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g ffmpegthumbnailer tumbler mesa-utils
+sudo pacman -S --needed wl-clipboard wtype slurp dialog dunst brightnessctl pamixer imv mpv imagemagick swaybg swayidle mesa-utils file-roller p7zip ffmpegthumbnailer tumbler gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g 
 echo ""
 echo -e "${Green}INSTALLING NEEDED PACKAGES - DONE ${No}"
 echo ""
@@ -92,7 +91,7 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING BASIC PACKAGES...${No}"
 echo ""
-sudo pacman -S --needed kitty firefox pcmanfm-gtk3 pinta evince gnome-disk-utility galculator meld obsidian network-manager-applet htop bat exa ranger neofetch starship cliphist wget python-pillow python-pip python-requests man-db man-pages pacman-contrib
+sudo pacman -S --needed kitty firefox pcmanfm-gtk3 pinta evince gnome-disk-utility galculator meld obsidian htop bat exa ranger neofetch starship cliphist wget python-pillow python-pip python-requests network-manager-applet man-db man-pages pacman-contrib
 echo ""
 echo -e "${Green}INSTALLING BASIC PACKAGES - DONE ${No}"
 echo ""
@@ -102,8 +101,8 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING AUR PACKEGES... ${No}"
 echo ""
-yay -S --needed xfce-polkit waybar-hyprland redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker-git swaylock-effects jmtpfs hyprprop-git tty-clock-git neo-matrix-git cava pipes.sh
-yay -S --needed brave-bin visual-studio-code-bin
+yay -S --needed xfce-polkit waybar-hyprland-git visual-studio-code-bin redshift-wayland-git nwg-look-bin rofi-lbonn-wayland-git grimblast-git hyprpicker swaylock-effects jmtpfs hyprprop-git tty-clock-git cava pipes.sh neo-matrix-git 
+yay -S --needed brave-bin 
 sudo pacman -S --needed rofi-emoji
 echo ""
 echo -e "${Green}INSTALLING AUR PACKEGES - DONE ${No}"
@@ -115,7 +114,7 @@ echo ""
 echo -e "${Cyan}INSTALLING LIBRE-OFFICE...${No}"
 echo ""
 sudo pacman -S --needed libreoffice-fresh hunspell hunspell-en_us
-yay -S --needed libreoffice-extension-languagetool 
+# IF NEEDED -- yay -S --needed libreoffice-extension-languagetool 
 echo ""
 echo -e "${Green}INSTALLING LIBRE-OFFICE - DONE ${No}"
 echo ""
@@ -125,15 +124,14 @@ echo ""
 # ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING VIRTUAL WINDOWS MANAGER...${No}"
 echo ""
-sudo pacman -S --needed qemu-base virt-manager dnsmasq vde2 bridge-utils openbsd-netcat ebtables iptables libguestfs
+sudo pacman -S --needed qemu-base virt-manager dnsmasq vde2 bridge-utils openbsd-netcat iptables libguestfs
 echo ""
 echo -e "${Green}INSTALLING VIRTUAL WINDOWS MANAGER - DONE ${No}"
 echo ""
 echo ""
 echo -e "${Yellow}ENABLING LIBVIRTD SERVICE... ${No}"
 echo ""
-sudo systemctl enable libvirtd.service
-sudo systemctl start libvirtd.service
+sudo systemctl --now enable libvirtd.service
 echo ""
 sudo virsh net-start default
 sudo virsh net-autostart default
@@ -166,7 +164,7 @@ echo ""
 # ~~~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING FONTS...${No}"
 echo ""
-sudo pacman -S --needed adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-joypixels ttf-nerd-fonts-symbols-common ttf-liberation ttf-monofur ttf-dejavu powerline-fonts
+sudo pacman -S --needed noto-fonts noto-fonts-emoji noto-fonts-cjk ttf-ubuntu-font-family otf-font-awesome ttf-jetbrains-mono-nerd ttf-roboto-mono-nerd ttf-nerd-fonts-symbols adobe-source-han-sans-otc-fonts adobe-source-han-serif-otc-fonts ttf-liberation ttf-monofur ttf-dejavu
 echo ""
 echo -e "${Green}INSTALLING FONTS - DONE ${No}"
 echo ""
@@ -176,7 +174,7 @@ echo ""
 # ~~~~~~~~~~~
 echo -e "${Cyan}INSTALLING AUR FONTS... ${No}"
 echo ""
-yay -S --needed ttf-meslo-nerd-font-powerlevel10k ttf-material-design-icons otf-bebas-neue-git
+yay -S --needed ttf-material-design-icons otf-bebas-neue-git
 echo ""
 echo -e  "${Green}INSTALLING AUR FONTS - DONE ${No}"
 echo ""
