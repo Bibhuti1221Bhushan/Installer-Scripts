@@ -171,8 +171,7 @@ yay -S --needed sddm-git
 sudo systemctl enable sddm
 
 # INSTALLING MISSING DRIVERS
-yay -S --needed aic94xx-firmware wd719x-firmware ast-firmware upd72020x-fw
-sudo pacman -S --needed linux-firmware-qlogic
+yay -S --needed mkinitcpio-firmware
 
 # INSTALLING FROM AUR REPOSITORY --NEEDED FOR HYPRLAND 
 yay -S --needed xfce-polkit 
@@ -294,7 +293,8 @@ NOTE --INSTALL spice spice-gtk IN GUEST
 
 # INSTALLING MPD & NCMPCPP
 sudo pacman -S mpd ncmpcpp
-systemctl enable mpd
+
+systemctl --user enable mpd
 
 # INSTALLING VIRTUAL BOX
 sudo pacman -S virtualbox virtualbox-host-modules-arch
@@ -369,3 +369,44 @@ BLUEMAN
 LF
 SUBLIME-TEXT-4 
 FONT-MANAGER
+
+
+
+
+
+
+
+# GTK CSS CUSTOMIZE 
+
+
+# ICONS CHANGE
+MELD
+PCMANFM
+PINTA
+
+# DONE
+NWG-LOOKS
+DCONF EDITOR
+FILE ROLLER
+PAVUCONTROL
+VISUAL STUDIO CODE
+DOCUMENTS VIEWER
+KITTY
+BLUEBERRY
+NM-APPLET
+BRAVE
+DISK
+GALCULATOR
+FIREFOX
+HTOP
+KVANTUM MANAGER
+MPV
+NEOVIM
+OBSIDIAN
+QT5CT
+RANGER
+REDSHIFT
+ROFI
+SUBLIME TEXT
+LF
+
