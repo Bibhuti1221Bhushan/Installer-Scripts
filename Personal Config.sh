@@ -207,7 +207,8 @@ sudo pacman -S --needed gvfs-mtp mtpfs gvfs-gphoto2 gvfs-afc gvfs-nfs ntfs-3g
 sudo pacman -S --needed pinta evince gnome-disk-utility galculator meld obsidian 
 sudo pacman -S --needed htop bat exa ranger neofetch starship cliphist wget
 sudo pacman -S --needed python-pillow python-pip python-requests network-manager-applet 
-sudo pacman -S --needed man-db man-pages pacman-contrib   
+sudo pacman -S --needed man-db man-pages pacman-contrib  
+sudo pacman -S --needed gnome-keyring pragha 
   
 # IF NEEDED -- thunar thunar-volman thunar-archive-plugin nautilus
 # IF NEEDED -- dconf-editor net-tools inetutils gtop
