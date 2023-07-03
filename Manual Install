@@ -150,6 +150,7 @@ cd paru-bin
 makepkg -si
 cd ..
 rm -rf paru-bin
+paru --gendb  
 
 # INSTALLING SDDM LOG IN MANAGER
 paru -S --needed sddm-git
@@ -202,7 +203,15 @@ sudo pacman -S --needed gvfs-mtp
 sudo pacman -S --needed gvfs-gphoto2
 sudo pacman -S --needed gvfs-afc
 sudo pacman -S --needed gvfs-nfs
-sudo pacman -S --needed ntfs-3g 
+sudo pacman -S --needed btrfs-progs
+sudo pacman -S --needed exfatprogs
+sudo pacman -S --needed udftools
+sudo pacman -S --needed xfsprogs
+sudo pacman -S --needed ntfs-3g
+sudo pacman -S --needed dosfstools
+sudo pacman -S --needed mtools
+sudo pacman -S --needed f2fs-tools
+sudo pacman -S --needed xorg-xhost
 sudo pacman -S --needed man-db
 sudo pacman -S --needed man-pages 
 sudo pacman -S --needed pacman-contrib 
@@ -221,6 +230,7 @@ sudo pacman -S --needed neofetch
 sudo pacman -S --needed starship
 sudo pacman -S --needed cliphist
 # --GUI PACKAGES
+sudo pacman -S --needed font-manager
 sudo pacman -S --needed network-manager-applet  
 sudo pacman -S --needed imv 
 sudo pacman -S --needed mpv 
@@ -335,7 +345,9 @@ mkdir -p ~/Pictures/Screenshots
 
 --INSTALL GTK THEME
 
---INSTALL ICONS THEME     
+# INSTALL ICONS THEME    
+cd ~/Documents/Github/Personal-Dots/Root
+sudo cp -r Breeze /usr/share/icons/
 
 --SET CONFIG ONE-BY-ONE
 
@@ -376,8 +388,12 @@ sudo usermod -aG vboxusers Bibhuti
 
 -- SUBLIME TEXT THEME = Gravity
 -- MOSTLY CONFIG FILES ARE IN BASH SYNTAX 
--- VSCODE EXTENSIONS -- atommaterial.a-file-icon-vscode zhuangtongfa.material-theme naumovs.color-highlight
+
+-- VSCODE EXTENSIONS -- atommaterial.a-file-icon-vscode
+-- VSCODE EXTENSIONS -- zhuangtongfa.material-theme 
+-- VSCODE EXTENSIONS -- naumovs.color-highlight
 -- VSCODE KEYBINDS -- uppercase CTRL+K,CTRL+U lowercase CTRL+U,CTRL+K
+
 -- WINDOWS TITLES: Noto Sans Regular 10
 
 -- FIREFOX about:config -- devtools.accessibility.enabled False
@@ -392,7 +408,6 @@ TLP
 BLUEMAN
 LF
 SUBLIME-TEXT-4 
-FONT-MANAGER
 MELD
 
 
