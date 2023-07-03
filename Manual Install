@@ -365,6 +365,12 @@ sudo ./Install.sh
 cd ~/Documents/Github/Installer-Scripts/Themes/Login-Manager-Theme
 ./Install.sh
 
+# HIDE VENTOY-EFI PARTITION 
+lsblk -- TO VIEW DISK LABEL
+sudo nvim /etc/udev/rules.d/hide-ventoy.rules
+KERNEL=="sdb2", ENV{UDISKS_IGNORE}="1"  -- ADD IN FILE
+sudo udevadm trigger
+
 --EDIT MENU DESKTOP FILE
 
                    # IF NEEDED #
