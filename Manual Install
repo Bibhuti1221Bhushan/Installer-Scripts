@@ -9,6 +9,9 @@ station wlan0 show
 station wlan0 connect REDMI K50I   
 exit                               
 
+# CHECK INTERNET CONNECTION
+ping -c 2 google.com
+
 # DISK PARTITION FOR UEFI
 lsblk
 fdisk /dev/sda
@@ -16,7 +19,7 @@ g = WARNING --FORMAT WHOLE DISK GPT PARTITION TABLE
 n = NEW PARTITION
 SIMPLY PRESS ENTER = 1ST PARTITION
 SIMPLY PRESS ENTER = AS FIRST SECTOR
-+500M = AS LAST SECTOR (BOOT PARTITION)
++512M = AS LAST SECTOR (BOOT PARTITION)
 t = PARTITION STYLE
 1 = FOR EFI PARTITION TABLE
 
@@ -25,12 +28,16 @@ n = NEW PARTITION
 SIMPLY PRESS ENTER = 2ND PARTITION
 SIMPLY PRESS ENTER = AS FIRST SECTOR 
 +40G = AS LAST SECTOR (ROOT PARTITION)
+t = PARTITION STYLE
+23 = FOR EFI PARTITION TABLE
 
 # DISK PARTITION FOR HOME
 n = NEW PARTITION 
 SIMPLY PRESS ENTER = 2ND PARTITION
 SIMPLY PRESS ENTER = AS FIRST SECTOR 
 SIMPLY PRESS ENTER = AS LAST SECTOR (HOME PARTITION OF REMAINING SPACE)
+t = PARTITION STYLE
+42 = FOR EFI PARTITION TABLE
 p = PRINT PARTITION CONFIGURATION 
 w = WRITE & EXIT
 
@@ -55,6 +62,10 @@ cat /mnt/etc/fstab
 
 # CHROOT
 arch-chroot /mnt
+
+# CHECK PACMAN KEYS
+pacman-key --init
+pacman-key --populate
 
 # INSTALLING EDITOR 
 pacman -Sy --needed neovim
@@ -83,7 +94,7 @@ passwd      # --SET ROOT PASSWORD
 # ADD USER ACCOUNT & PASSWORD
 useradd -m Bibhuti -c "Bibhuti Bhushan"
 passwd Bibhuti      
-usermod -aG wheel,audio,video,optical,storage,disk,network Bibhuti
+usermod -aG wheel,audio,video,optical,storage,disk,network,power,input Bibhuti
 
 # CONFIGURING SUDOERS
 EDITOR=nvim visudo      # --UNCOMMENT %wheel ALL=(ALL) ALL
@@ -95,7 +106,7 @@ mkswap /swapfile
 swapon /swapfile
 echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
 cat /etc/fstab
-Free -m
+free -m
 
 # CONFIGURING PACMAN
 nvim /etc/pacman.conf   # --UNCOMMENT ( COLOR PARALLELDOWNLOADS MULTILIB ) & ADD ILoveCandy
@@ -110,9 +121,21 @@ grub-mkconfig -o /boot/grub/grub.cfg
 pacman -S --needed networkmanager
 systemctl enable NetworkManager
 
+# CONSOLE KEY-MAP
+nvim /etc/vconsole.conf
+KEYMAP=us
+FONT=default8x16
+
+# NO WATCH-DOG
+nvim /etc/modprobe.d/nowatchdog.conf
+blacklist iTCO_wdt      -- ADD IN FILE
+
+# RE-INITIALIZE INITRAMFS
+mkinitcpio -P
+
 # FINAL STEPS
 exit
-unmount -a
+unmount -Ra /mnt
 poweroff
 
 
@@ -153,7 +176,7 @@ rm -rf paru-bin
 paru --gendb  
 
 # INSTALLING SDDM LOG IN MANAGER
-paru -S --needed sddm-git
+sudo pacman -S --needed sddm
 sudo systemctl enable sddm
 
 # INSTALLING MISSING DRIVERS
@@ -196,8 +219,10 @@ sudo pacman -S --needed acpi
 sudo pacman -S --needed mesa-utils
 sudo pacman -S --needed file-roller
 sudo pacman -S --needed p7zip
+sudo pacman -S --needed unrar
 sudo pacman -S --needed ffmpegthumbnailer
 sudo pacman -S --needed tumbler 
+sudo pacman -S --needed usbutils
 sudo pacman -S --needed mtpfs
 sudo pacman -S --needed gvfs-mtp
 sudo pacman -S --needed gvfs-gphoto2
@@ -263,7 +288,7 @@ paru -S --needed nwg-look-bin
 paru -S --needed rofi-lbonn-wayland-git  
 paru -S --needed brave-bin
 
-sudo pacman -S -needed rofi-emoji
+sudo pacman -S --needed rofi-emoji
 
 # INSTALLING BLUETOOTH 
 sudo pacman -S --needed bluez
@@ -315,6 +340,7 @@ sudo pacman -S --needed noto-fonts
 sudo pacman -S --needed noto-fonts-emoji 
 sudo pacman -S --needed noto-fonts-cjk 
 sudo pacman -S --needed ttf-ubuntu-font-family
+sudo pacman -S --needed inter-font
 # ICONS-SYMBOLS FONTS
 sudo pacman -S --needed adobe-source-han-sans-otc-fonts 
 sudo pacman -S --needed adobe-source-han-serif-otc-fonts 
@@ -334,6 +360,10 @@ paru -S --needed otf-bebas-neue-git
 # REGENERATE FONTS CACHE
 fc-cache -fv 
 sudo fc-cache -fv
+
+# POWER MANAGEMENT
+sudo pacman -S --needed tlp
+sudo systemctl enable --now tlp
 
 # CREATING DIRECTORIES
 mkdir -p ~/Videos
@@ -366,7 +396,7 @@ cd ~/Documents/Github/Installer-Scripts/Themes/Login-Manager-Theme
 ./Install.sh
 
 # HIDE VENTOY-EFI PARTITION 
-lsblk -- TO VIEW DISK LABEL
+lsblk -f  -- TO VIEW DISK LABEL
 sudo nvim /etc/udev/rules.d/hide-ventoy.rules
 KERNEL=="sdb2", ENV{UDISKS_IGNORE}="1"  -- ADD IN FILE
 sudo udevadm trigger
@@ -375,6 +405,13 @@ sudo udevadm trigger
 
                    # IF NEEDED #
 
+
+# CHANGE DNS SERVER
+sudo nvim /etc/resolv.conf
+-- ADD BELOW LINES
+nameserver 1.1.1.1
+nameserver 8.8.8.8
+nameserver 8.8.4.4
 
 # INSTALLING VIRTUAL WINDOWS MANAGER
 sudo pacman -S gnome-boxes
@@ -421,3 +458,45 @@ MELD
 MELD
 PCMANFM
 PINTA
+
+
+# AFTER INSTALL
+LIBMTP
+LIBVA-INTEL-DRIVER
+
+
+
+# FONT CONFIG  -- /etc/fonts/local.conf
+<?xml version="1.0"?>
+<!DOCTYPE fontconfig SYSTEM "fonts.dtd">
+<fontconfig>
+	<match>
+		<edit mode="prepend" name="family">
+			<string>Inter</string>
+		</edit>
+	</match>
+	<match target="pattern">
+		<test qual="any" name="family">
+			<string>serif</string>
+		</test>
+		<edit name="family" mode="assign" binding="same">
+			<string>Noto Serif</string>
+		</edit>
+	</match>
+	<match target="pattern">
+		<test qual="any" name="family">
+			<string>sans-serif</string>
+		</test>
+		<edit name="family" mode="assign" binding="same">
+			<string>Noto Sans</string>
+		</edit>
+	</match>
+	<match target="pattern">
+		<test qual="any" name="family">
+			<string>monospace</string>
+		</test>
+		<edit name="family" mode="assign" binding="same">
+			<string>Noto Mono</string>
+		</edit>
+	</match>
+</fontconfig>
