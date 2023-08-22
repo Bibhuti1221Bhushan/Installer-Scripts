@@ -38,16 +38,16 @@ p = PRINT PARTITION CONFIGURATION
 w = WRITE & EXIT
 
 # FORMATTING PARTITIONS
-mkfs.ext4 -L ARCH /dev/sda1
+mkfs.ext4 -L ROOT /dev/sda1
 mkfs.ext4 -L HOME /dev/sda2
-mkfs.fat -F 32 -n EFI /dev/sda3
+mkfs.fat -F 32 -n BOOT /dev/sda3
 
 # MOUNTING PARTITIONS
 mount /dev/sda1 /mnt
 mkdir /mnt/home 
 mount /dev/sda2 /mnt/home
-mkdir -p /mnt/boot/EFI
-mount /dev/sda3 /mnt/boot/EFI
+mkdir -p /mnt/boot/efi
+mount /dev/sda3 /mnt/boot/efi
 
 # INSTALLING BASE SYSTEM 
 pacstrap -Ki /mnt base base-devel linux linux-firmware linux-headers intel-ucode
@@ -96,25 +96,25 @@ usermod -aG wheel,audio,video,storage,disk,network,power,input,optical Bibhuti
 EDITOR=nvim visudo      # --UNCOMMENT [ %wheel ALL=(ALL) ALL ]
 
 # CREATE SWAP FILE 
-dd if=/dev/zero of=/swapfile bs=1M count=8192 status=progress
-chmod 0600 /swapfile
-mkswap -L SWAP -U clear /swapfile
-swapon /swapfile
-echo '/swapfile none swap sw 0 0' | tee -a /etc/fstab
-cat /etc/fstab
-free -h
+# dd if=/dev/zero of=/opt/swapfile bs=1M count=8192 status=progress
+# chmod 0600 /opt/swapfile
+# mkswap -L SWAP -U clear /opt/swapfile
+# swapon /opt/swapfile
+# echo '/opt/swapfile none swap sw 0 0' | tee -a /etc/fstab
+# cat /etc/fstab
+# free -h
 
 # CONFIGURING PACMAN
 nvim /etc/pacman.conf   # --UNCOMMENT [ Color ParallelDownloads Multilib ] & ADD [ ILoveCandy ]
 pacman -Syu
 
 # INSTALLING GRUB BOOT MANAGER
-pacman -S --needed grub efibootmgr       
-grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id="Boot Manager" --recheck
+pacman -S grub efibootmgr       
+grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Boot Manager" --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # CONFIGURING NETWORK MANAGER
-pacman -S --needed networkmanager
+pacman -S networkmanager
 systemctl enable NetworkManager
 
 # NO WATCH-DOG
@@ -147,21 +147,21 @@ sudo nmtui
 sudo pacman -Syu
 
 # INSTALLING -- AUDIO PACKAGES - PIPEWIRE
-sudo pacman -S --needed pipewire pipewire-jack pipewire-pulse pipewire-alsa pavucontrol
+sudo pacman -S pipewire pipewire-jack pipewire-pulse pipewire-alsa pavucontrol
 systemctl --user enable pipewire pipewire-pulse wireplumber
 
 # INSTALLING -- HYPRLAND NEEDED STUFF
-sudo pacman -S --needed hyprland xdg-desktop-portal-hyprland wl-clipboard 
+sudo pacman -S hyprland xdg-desktop-portal-hyprland wl-clipboard 
 
 # INSTALLING -- COMMON ESSENTIAL PACKAGES
-sudo pacman -S --needed kitty firefox pcmanfm-gtk3
+sudo pacman -S kitty firefox pcmanfm-gtk3
 
 # INSTALLING -- SDDM WINDOW MANAGER
-sudo pacman -S --needed sddm
+sudo pacman -S sddm
 sudo systemctl enable sddm
 
 # INSTALLING -- GIT & AUR HELPER (PARU)
-sudo pacman -S --needed git
+sudo pacman -S git
 mkdir -p Downloads/Repos
 cd Downloads/Repos
 git clone https://aur.archlinux.org/paru-bin.git
@@ -172,11 +172,11 @@ rm -rf paru-bin
 paru --gendb  
 
 # INSTALLING -- MISSING DRIVERS 
-paru -S --needed mkinitcpio-firmware
+paru -S mkinitcpio-firmware
 
 # INSTALLING -- COMMON ESSENTIAL PACKAGES 
-paru -S --needed xfce-polkit 
-paru -S --needed visual-studio-code-bin
+paru -S xfce-polkit 
+paru -S visual-studio-code-bin
 
 # BOOT IN TO WINDOW MANAGER
 sudo reboot --r now
