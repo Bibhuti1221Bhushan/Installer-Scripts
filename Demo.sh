@@ -46,8 +46,8 @@ mkfs.fat -F 32 -n BOOT /dev/sda3
 mount /dev/sda1 /mnt
 mkdir /mnt/home 
 mount /dev/sda2 /mnt/home
-mkdir -p /mnt/boot/efi
-mount /dev/sda3 /mnt/boot/efi
+mkdir -p /mnt/boot/EFI
+mount /dev/sda3 /mnt/boot/EFI
 
 # INSTALLING BASE SYSTEM 
 pacstrap -Ki /mnt base base-devel linux linux-firmware linux-headers intel-ucode
@@ -110,7 +110,7 @@ pacman -Syu
 
 # INSTALLING GRUB BOOT MANAGER
 pacman -S grub efibootmgr       
-grub-install --target=x86_64-efi --efi-directory=/boot/efi --bootloader-id="Boot Manager" --recheck
+grub-install --target=x86_64-efi --efi-directory=/boot/EFI --bootloader-id="Boot Manager" --recheck
 grub-mkconfig -o /boot/grub/grub.cfg
 
 # CONFIGURING NETWORK MANAGER
@@ -172,7 +172,7 @@ rm -rf paru-bin
 paru --gendb  
 
 # INSTALLING -- MISSING DRIVERS 
-paru -S mkinitcpio-firmware
+# paru -S mkinitcpio-firmware
 
 # INSTALLING -- COMMON ESSENTIAL PACKAGES 
 paru -S xfce-polkit 
@@ -215,7 +215,10 @@ sudo pacman -S --needed usbutils f2fs-tools ntfs-3g exfatprogs udftools xfsprogs
 sudo pacman -S --needed dosfstools mtools
 
 # INSTALLING -- NEEDED FOR SYSTEM
-sudo pacman -S --needed wget mesa-utils pacman-contrib xorg-xhost gnome-keyring libgnome-keyring
+sudo pacman -S --needed wget pacman-contrib xorg-xhost gnome-keyring libgnome-keyring
+
+# INSTALLING -- NEEDED VIDEO DRIVERS
+sudo pacman -S  mesa-utils
 
 # INSTALLING -- MAN PAGES
 sudo pacman -S --needed man-db man-pages 
@@ -497,3 +500,8 @@ echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE
 echo "KEYMAP=us" > /etc/vconsole.conf
 
 
+
+
+usbutils
+
+modprobe.blacklist=iTCO_wdt
