@@ -209,62 +209,62 @@ sudo pacman -S --needed qt5-graphicaleffects qt5-svg qt5-quickcontrols2
 # IF NEEDED -- echo -e "QT_QPA_PLATFORMTHEME=qt5ct\nQT_QPA_PLATFORMTHEME=qt6ct\nQT_QPA_PLATFORM=wayland\nQT_WAYLAND_DISABLE_WINDOWDECORATION=1\nQT_AUTO_SCREEN_SCALE_FACTOR=1\nMOZ_ENABLE_WAYLAND=1" | sudo tee -a /etc/environment
 
 # INSTALLING EXTRAS FROM ARCH REPOSITORY
-sudo pacman -S --needed dunst
-sudo pacman -S --needed brightnessctl
-sudo pacman -S --needed pamixer
-sudo pacman -S --needed imagemagick
-sudo pacman -S --needed swaybg
-sudo pacman -S --needed swayidle
-sudo pacman -S --needed acpi
-sudo pacman -S --needed mesa-utils
-sudo pacman -S --needed file-roller
-sudo pacman -S --needed p7zip
-sudo pacman -S --needed unrar
-sudo pacman -S --needed ffmpegthumbnailer
-sudo pacman -S --needed tumbler 
-sudo pacman -S --needed usbutils
-sudo pacman -S --needed mtpfs
-sudo pacman -S --needed gvfs-mtp
-sudo pacman -S --needed gvfs-gphoto2
-sudo pacman -S --needed gvfs-afc
-sudo pacman -S --needed gvfs-nfs
-sudo pacman -S --needed btrfs-progs
-sudo pacman -S --needed exfatprogs
-sudo pacman -S --needed udftools
-sudo pacman -S --needed xfsprogs
-sudo pacman -S --needed ntfs-3g
-sudo pacman -S --needed dosfstools
-sudo pacman -S --needed mtools
-sudo pacman -S --needed f2fs-tools
-sudo pacman -S --needed xorg-xhost
-sudo pacman -S --needed man-db
-sudo pacman -S --needed man-pages 
-sudo pacman -S --needed pacman-contrib 
-sudo pacman -S --needed wget
-sudo pacman -S --needed python-pillow 
-sudo pacman -S --needed python-pip
-sudo pacman -S --needed python-requests
-sudo pacman -S --needed yt-dlp
-sudo pacman -S --needed youtube-dl
+sudo pacman -S --needed --noconfirm dunst
+sudo pacman -S --needed --noconfirm brightnessctl
+sudo pacman -S --needed --noconfirm pamixer
+sudo pacman -S --needed --noconfirm imagemagick
+sudo pacman -S --needed --noconfirm swaybg
+sudo pacman -S --needed --noconfirm swayidle
+sudo pacman -S --needed --noconfirm acpi
+sudo pacman -S --needed --noconfirm mesa-utils
+sudo pacman -S --needed --noconfirm file-roller
+sudo pacman -S --needed --noconfirm p7zip
+sudo pacman -S --needed --noconfirm unrar
+sudo pacman -S --needed --noconfirm ffmpegthumbnailer
+sudo pacman -S --needed --noconfirm tumbler 
+sudo pacman -S --needed --noconfirm usbutils
+sudo pacman -S --needed --noconfirm mtpfs
+sudo pacman -S --needed --noconfirm gvfs-mtp
+sudo pacman -S --needed --noconfirm gvfs-gphoto2
+sudo pacman -S --needed --noconfirm gvfs-afc
+sudo pacman -S --needed --noconfirm gvfs-nfs
+sudo pacman -S --needed --noconfirm btrfs-progs
+sudo pacman -S --needed --noconfirm exfatprogs
+sudo pacman -S --needed --noconfirm udftools
+sudo pacman -S --needed --noconfirm xfsprogs
+sudo pacman -S --needed --noconfirm ntfs-3g
+sudo pacman -S --needed --noconfirm dosfstools
+sudo pacman -S --needed --noconfirm mtools
+sudo pacman -S --needed --noconfirm f2fs-tools
+sudo pacman -S --needed --noconfirm xorg-xhost
+sudo pacman -S --needed --noconfirm man-db
+sudo pacman -S --needed --noconfirm man-pages 
+sudo pacman -S --needed --noconfirm pacman-contrib 
+sudo pacman -S --needed --noconfirm wget
+sudo pacman -S --needed --noconfirm python-pillow 
+sudo pacman -S --needed --noconfirm python-pip
+sudo pacman -S --needed --noconfirm python-requests
+sudo pacman -S --needed --noconfirm yt-dlp
+sudo pacman -S --needed --noconfirm youtube-dl
 # --TERMINAL PACKAGES
-sudo pacman -S --needed htop
-sudo pacman -S --needed bat
-sudo pacman -S --needed exa
-sudo pacman -S --needed ranger
-sudo pacman -S --needed neofetch
-sudo pacman -S --needed starship
-sudo pacman -S --needed cliphist
+sudo pacman -S --needed --noconfirm htop
+sudo pacman -S --needed --noconfirm bat
+sudo pacman -S --needed --noconfirm exa
+sudo pacman -S --needed --noconfirm ranger
+sudo pacman -S --needed --noconfirm neofetch
+sudo pacman -S --needed --noconfirm starship
+sudo pacman -S --needed --noconfirm cliphist
 # --GUI PACKAGES
-sudo pacman -S --needed font-manager
-sudo pacman -S --needed network-manager-applet  
-sudo pacman -S --needed imv 
-sudo pacman -S --needed mpv 
-sudo pacman -S --needed pinta
-sudo pacman -S --needed evince
-sudo pacman -S --needed gnome-disk-utility
-sudo pacman -S --needed baobab
-sudo pacman -S --needed galculator
-sudo pacman -S --needed pragha 
+sudo pacman -S --needed --noconfirm font-manager
+sudo pacman -S --needed --noconfirm network-manager-applet  
+sudo pacman -S --needed --noconfirm imv 
+sudo pacman -S --needed --noconfirm mpv 
+sudo pacman -S --needed --noconfirm pinta
+sudo pacman -S --needed --noconfirm evince
+sudo pacman -S --needed --noconfirm gnome-disk-utility
+sudo pacman -S --needed --noconfirm baobab
+sudo pacman -S --needed --noconfirm galculator
+sudo pacman -S --needed --noconfirm pragha 
 
 # IF NEEDED -- sudo pacman -S --needed obsidian 
 # IF NEEDED -- thunar thunar-volman thunar-archive-plugin nautilus
@@ -307,17 +307,11 @@ sudo pacman -S --needed ttf-liberation
 # IF NEEDE -- paru -S libreoffice-extension-languagetool    
 
 # INSTALLING VIRTUAL WINDOWS MANAGER
-sudo pacman -S --needed qemu-base
-sudo pacman -S --needed virt-manager
-sudo pacman -S --needed libguestfs
-sudo pacman -S --needed dnsmasq 
-sudo pacman -S --needed bridge-utils 
-sudo pacman -S --needed openbsd-netcat 
-sudo pacman -S --needed iptables 
+sudo pacman -S --needed --noconfirm qemu-base virt-manager libguestfs dnsmasq bridge-utils openbsd-netcat iptables 
 # --IF NEEDED
 # sudo pacman -S --needed qemu-audio-jack
 # sudo pacman -S --needed qemu-audio-pa
-sudo systemctl enable libvirtd.service
+sudo systemctl enable --now libvirtd.service
 sudo virsh net-start default
 sudo virsh net-autostart default
 sudo usermod -aG libvirt $(whoami)
@@ -336,22 +330,22 @@ sudo su
 chsh -s $(which zsh)  -- FOR ROOT USER
 
 # INSTALLING ARCH FONTS 
-sudo pacman -S --needed noto-fonts
-sudo pacman -S --needed noto-fonts-emoji 
-sudo pacman -S --needed noto-fonts-cjk 
-sudo pacman -S --needed ttf-ubuntu-font-family
-sudo pacman -S --needed inter-font
+sudo pacman -S --needed --noconfirm noto-fonts
+sudo pacman -S --needed --noconfirm noto-fonts-emoji 
+sudo pacman -S --needed --noconfirm noto-fonts-cjk 
+sudo pacman -S --needed --noconfirm ttf-ubuntu-font-family
+sudo pacman -S --needed --noconfirm inter-font
 # ICONS-SYMBOLS FONTS
-sudo pacman -S --needed adobe-source-han-sans-otc-fonts 
-sudo pacman -S --needed adobe-source-han-serif-otc-fonts 
-sudo pacman -S --needed ttf-monofur
-sudo pacman -S --needed ttf-hanazono
-sudo pacman -S --needed ttf-jetbrains-mono-nerd 
-sudo pacman -S --needed ttf-roboto-mono-nerd 
-sudo pacman -S --needed otf-font-awesome
-sudo pacman -S --needed ttf-nerd-fonts-symbols
-sudo pacman -S --needed awesome-terminal-fonts 
-sudo pacman -S --needed powerline-fonts
+sudo pacman -S --needed --noconfirm adobe-source-han-sans-otc-fonts 
+sudo pacman -S --needed --noconfirm adobe-source-han-serif-otc-fonts 
+sudo pacman -S --needed --noconfirm ttf-monofur
+sudo pacman -S --needed --noconfirm ttf-hanazono
+sudo pacman -S --needed --noconfirm ttf-jetbrains-mono-nerd 
+sudo pacman -S --needed --noconfirm ttf-roboto-mono-nerd 
+sudo pacman -S --needed --noconfirm otf-font-awesome
+sudo pacman -S --needed --noconfirm ttf-nerd-fonts-symbols
+sudo pacman -S --needed --noconfirm awesome-terminal-fonts 
+sudo pacman -S --needed --noconfirm powerline-fonts
 # AUR FONTS
 paru -S --needed ttf-material-design-icons 
 paru -S --needed otf-bebas-neue-git
@@ -405,13 +399,6 @@ sudo udevadm trigger
 
                    # IF NEEDED #
 
-
-# CHANGE DNS SERVER
-sudo nvim /etc/resolv.conf
--- ADD BELOW LINES
-nameserver 1.1.1.1
-nameserver 8.8.8.8
-nameserver 8.8.4.4
 
 # INSTALLING VIRTUAL WINDOWS MANAGER
 sudo pacman -S gnome-boxes
