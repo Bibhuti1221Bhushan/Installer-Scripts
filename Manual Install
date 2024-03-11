@@ -389,6 +389,13 @@ sudo ./Install.sh
 cd ~/Documents/Github/Installer-Scripts/Themes/Login-Manager-Theme
 ./Install.sh
 
+# DOWNLOAD & INSTALL VSCODE EXTENSIONS
+code --install-extension ms-vscode.cpptools	# --DIRECTLY FROM MARKETPLACE
+cd ~/Downloads/Repos
+curl https://{atommaterial}.gallery.vsassets.io/_apis/public/gallery/publisher/{atommaterial}/extension/{a-file-icon-vscode}/latest/assetbyname/Microsoft.VisualStudio.Services.VSIXPackage -o extension.vsix
+export NODE_OPTIONS=--throw-deprecation
+code --install-extension ~/Downloads/Repos/extension.vsix 
+
 # HIDE VENTOY-EFI PARTITION 
 lsblk -f  -- TO VIEW DISK LABEL
 sudo nvim /etc/udev/rules.d/hide-ventoy.rules
